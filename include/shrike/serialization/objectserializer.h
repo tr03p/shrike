@@ -74,6 +74,7 @@ public:
 	virtual void serialize(const std::string& name, const std::vector<uint64_t>& array) = 0;
 	virtual void serialize(const std::string& name, const std::vector<double>& array) = 0;
 	virtual void serialize(const std::string& name, const std::vector<bool>& array) = 0;
+	virtual void serialize(const std::string& name, const std::vector<std::string>& array) = 0;
 
 	// Nullable basic type arrays
 	virtual void serialize(const std::string& name, const nullable<std::vector<int>>& array) = 0;
@@ -82,6 +83,7 @@ public:
 	virtual void serialize(const std::string& name, const nullable<std::vector<uint64_t>>& array) = 0;
 	virtual void serialize(const std::string& name, const nullable<std::vector<double>>& array) = 0;
 	virtual void serialize(const std::string& name, const nullable<std::vector<bool>>& array) = 0;
+	virtual void serialize(const std::string& name, const nullable<std::vector<std::string>>& array) = 0;
 
 	// Object and object array
 	virtual void serialize(const std::string& name, serializable_object* object) = 0;
@@ -116,6 +118,7 @@ public:
 	virtual void deserialize(const std::string& name, std::vector<uint64_t>& array) = 0;
 	virtual void deserialize(const std::string& name, std::vector<double>& array) = 0;
 	virtual void deserialize(const std::string& name, std::vector<bool>& array) = 0;
+	virtual void deserialize(const std::string& name, std::vector<std::string>& array) = 0;
 
 	// Nullable basic type arrays
 	virtual void deserialize(const std::string& name, nullable<std::vector<int>>& array) = 0;
@@ -124,6 +127,7 @@ public:
 	virtual void deserialize(const std::string& name, nullable<std::vector<uint64_t>>& array) = 0;
 	virtual void deserialize(const std::string& name, nullable<std::vector<double>>& array) = 0;
 	virtual void deserialize(const std::string& name, nullable<std::vector<bool>>& array) = 0;
+	virtual void deserialize(const std::string& name, nullable<std::vector<std::string>>& array) = 0;
 
 	// Object and object arrays
 	virtual void deserialize(const std::string& name, serializable_object* object) = 0;

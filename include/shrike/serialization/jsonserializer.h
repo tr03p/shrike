@@ -71,6 +71,7 @@ public:
 	void serialize(const std::string& name, const std::vector<uint64_t>& array);
 	void serialize(const std::string& name, const std::vector<double>& array);
 	void serialize(const std::string& name, const std::vector<bool>& array);
+	void serialize(const std::string& name, const std::vector<std::string>& array);
 
 	// Nullable basic type arrays
 	void serialize(const std::string& name, const nullable<std::vector<int>>& array);
@@ -79,6 +80,7 @@ public:
 	void serialize(const std::string& name, const nullable<std::vector<uint64_t>>& array);
 	void serialize(const std::string& name, const nullable<std::vector<double>>& array);
 	void serialize(const std::string& name, const nullable<std::vector<bool>>& array);
+	void serialize(const std::string& name, const nullable<std::vector<std::string>>& array);
 
 	// Object and object array
 	void serialize(const std::string& name, serializable_object* object);
@@ -113,6 +115,7 @@ public:
 	void deserialize(const std::string& name, std::vector<uint64_t>& array);
 	void deserialize(const std::string& name, std::vector<double>& array);
 	void deserialize(const std::string& name, std::vector<bool>& array);
+	void deserialize(const std::string& name, std::vector<std::string>& array);
 
 	// Nullable basic type arrays
 	void deserialize(const std::string& name, nullable<std::vector<int>>& array);
@@ -121,6 +124,7 @@ public:
 	void deserialize(const std::string& name, nullable<std::vector<uint64_t>>& array);
 	void deserialize(const std::string& name, nullable<std::vector<double>>& array);
 	void deserialize(const std::string& name, nullable<std::vector<bool>>& array);
+	void deserialize(const std::string& name, nullable<std::vector<std::string>>& array);
 
 	// Object and object arrays
 	void deserialize(const std::string& name, serializable_object* object);

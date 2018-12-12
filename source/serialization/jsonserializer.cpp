@@ -269,6 +269,22 @@ void json_serializer::serialize(const std::string& name, const std::vector<bool>
 	}
 }
 
+void json_serializer::serialize(const std::string& name, const std::vector<std::string>& array)
+{
+	if (array.empty()) {
+		_serializer_stack.top()[name] = Json::arrayValue;
+
+	} else {
+		Json::Value arrayValue;
+
+		for (Json::ArrayIndex i = 0; i < array.size(); ++i) {
+			arrayValue[i] = array[i];
+		}
+
+		_serializer_stack.top()[name] = arrayValue;
+	}
+}
+
 // Nullable basic type arrays
 
 void json_serializer::serialize(const std::string& name, const nullable<std::vector<int>>& array)
@@ -367,6 +383,25 @@ void json_serializer::serialize(const std::string& name, const nullable<std::vec
 }
 
 void json_serializer::serialize(const std::string& name, const nullable<std::vector<bool>>& array)
+{
+	if (array.isNull()) {
+		_serializer_stack.top()[name] = Json::nullValue;
+
+	} else if (array.value().empty()) {
+		_serializer_stack.top()[name] = Json::arrayValue;
+
+	} else {
+		Json::Value arrayValue;
+
+		for (Json::ArrayIndex i = 0; i < array.value().size(); ++i) {
+			arrayValue[i] = array.value()[i];
+		}
+
+		_serializer_stack.top()[name] = arrayValue;
+	}
+}
+
+void json_serializer::serialize(const std::string& name, const nullable<std::vector<std::string>>& array)
 {
 	if (array.isNull()) {
 		_serializer_stack.top()[name] = Json::nullValue;
@@ -707,6 +742,22 @@ void json_serializer::deserialize(const std::string& name, std::vector<bool>& ar
 	}
 }
 
+void json_serializer::deserialize(const std::string& name, std::vector<std::string>& array)
+{
+	array.clear();
+
+	if (_deserializer_stack.top()->isMember(name)) {
+		Json::ArrayIndex count = (*_deserializer_stack.top())[name].size();
+
+		for (Json::ArrayIndex i=0; i < count; ++i) {
+			array.push_back((*_deserializer_stack.top())[name][i].asString());
+		}
+
+	} else {
+		throw serializer_field_not_found_exception(name.c_str());
+	}
+}
+
 // Nullable basic type arrays
 
 void json_serializer::deserialize(const std::string& name, nullable<std::vector<int>>& array)
@@ -846,6 +897,31 @@ void json_serializer::deserialize(const std::string& name, nullable<std::vector<
 
 			for (Json::ArrayIndex i=0; i < count; ++i) {
 				value.push_back((*_deserializer_stack.top())[name][i].asBool());
+			}
+
+			array = value;
+		}
+
+	} else {
+		throw serializer_field_not_found_exception(name.c_str());
+	}
+}
+
+void json_serializer::deserialize(const std::string& name, nullable<std::vector<std::string>>& array)
+{
+	std::vector<std::string> value;
+
+	if (_deserializer_stack.top()->isMember(name)) {
+
+		if ((*_deserializer_stack.top())[name].isNull()) {
+			array.setNull();
+
+		} else {
+
+			Json::ArrayIndex count = (*_deserializer_stack.top())[name].size();
+
+			for (Json::ArrayIndex i=0; i < count; ++i) {
+				value.push_back((*_deserializer_stack.top())[name][i].asString());
 			}
 
 			array = value;
