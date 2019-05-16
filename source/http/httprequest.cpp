@@ -44,8 +44,8 @@ http_request::http_request(const std::string& uri, const std::string& data) :
 	_uri_path.reserve(tokens.size());
 	std::copy(tokens.begin(), tokens.end(), std::back_inserter(_uri_path));
 
-	_data.resize(data.size());
-	memcpy(_data.data(), data.data(), data.length());
+	_data.resize(data.size() + 1);
+	memcpy(_data.data(), data.c_str(), data.length() + 1);
 }
 
 http_request::http_request(const std::string& uri, const std::vector<uint8_t>& data) :
@@ -91,6 +91,16 @@ std::string http_request::parameter(const std::string& name) const
 		return "";
 	}
 }
+
+const std::string http_request::parameter_string() const
+{
+	std::string returnString;
+	for (const auto& parm : _parameters)
+		returnString += parm.first + '=' + parm.second;
+
+	return returnString;
+}
+
 
 const std::string http_request::data_to_string() const
 {

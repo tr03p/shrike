@@ -102,9 +102,14 @@ http_response http_client::impl::get(const http_request& request)
 		headers = curl_slist_append(headers, header_string.c_str());
 	}
 
+	const std::string queryString = request.parameter_string();
+	std::string url = request.uri();
+	if (!queryString.empty())
+		url += '?' + queryString;
+
 	// Options
 	curl_easy_setopt(ch, CURLOPT_HTTPHEADER, headers);
-	curl_easy_setopt(ch, CURLOPT_URL, request.uri().c_str());
+	curl_easy_setopt(ch, CURLOPT_URL, url.c_str());
 	curl_easy_setopt(ch, CURLOPT_WRITEFUNCTION, curl_get_callback);
 	curl_easy_setopt(ch, CURLOPT_WRITEDATA, &context);
 	curl_easy_setopt(ch, CURLOPT_USERAGENT, "libcurl-agent/1.0");

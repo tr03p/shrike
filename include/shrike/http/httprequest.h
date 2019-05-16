@@ -47,6 +47,7 @@ public:
 
 	void set_parameter(const std::string& key, const std::string& value);
 	std::string parameter(const std::string& name) const;
+	const std::string parameter_string() const;
 
 	const std::vector<uint8_t>& data() const { return _data; }
 
