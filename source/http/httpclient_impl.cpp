@@ -46,14 +46,14 @@ http_response http_client::impl::post(const http_request& request)
 	}
 
 	// Options
-	curl_easy_setopt(ch, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_easy_setopt(ch, CURLOPT_HTTPHEADER, headers);
 	curl_easy_setopt(ch, CURLOPT_POSTFIELDS, request.data().data());
 	curl_easy_setopt(ch, CURLOPT_URL, request.uri().c_str());
 	curl_easy_setopt(ch, CURLOPT_WRITEFUNCTION, curl_post_callback);
 	curl_easy_setopt(ch, CURLOPT_WRITEDATA, &context);
 	curl_easy_setopt(ch, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-	curl_easy_setopt(ch, CURLOPT_TIMEOUT, 0);
+	curl_easy_setopt(ch, CURLOPT_CONNECTTIMEOUT, 30);
+	curl_easy_setopt(ch, CURLOPT_TIMEOUT, 60);
 	curl_easy_setopt(ch, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(ch, CURLOPT_MAXREDIRS, 1);
 
@@ -113,7 +113,8 @@ http_response http_client::impl::get(const http_request& request)
 	curl_easy_setopt(ch, CURLOPT_WRITEFUNCTION, curl_get_callback);
 	curl_easy_setopt(ch, CURLOPT_WRITEDATA, &context);
 	curl_easy_setopt(ch, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-	curl_easy_setopt(ch, CURLOPT_TIMEOUT, 0);
+	curl_easy_setopt(ch, CURLOPT_CONNECTTIMEOUT, 30);
+	curl_easy_setopt(ch, CURLOPT_TIMEOUT, 60);
 	curl_easy_setopt(ch, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(ch, CURLOPT_MAXREDIRS, 1);
 
@@ -164,7 +165,8 @@ http_response http_client::impl::get(const http_request& request, const std::str
 	curl_easy_setopt(ch, CURLOPT_WRITEFUNCTION, curl_get_file_callback);
 	curl_easy_setopt(ch, CURLOPT_WRITEDATA, file);
 	curl_easy_setopt(ch, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-	curl_easy_setopt(ch, CURLOPT_TIMEOUT, 0);
+	curl_easy_setopt(ch, CURLOPT_CONNECTTIMEOUT, 30);
+	curl_easy_setopt(ch, CURLOPT_TIMEOUT, 60);
 	curl_easy_setopt(ch, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(ch, CURLOPT_MAXREDIRS, 1);
 

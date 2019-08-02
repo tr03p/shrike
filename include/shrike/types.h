@@ -41,8 +41,8 @@ public:
 	void setNull() { _null = true; }
 
 	operator T() const { return _value; }
-	nullable& operator = (const T& value) { _value = value; _null = false; }
-	nullable& operator = (const nullable& value) { _value = value._value; _null = value._null; }
+	nullable& operator = (const T& value) { _value = value; _null = false; return *this;}
+	nullable& operator = (const nullable& value) { _value = value._value; _null = value._null; return *this;}
 
 private:
 	bool _null;
