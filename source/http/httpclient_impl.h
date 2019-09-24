@@ -41,6 +41,7 @@ namespace shrike
 class http_client::impl
 {
 public:
+	impl();
 	http_response post(const http_request& request);
 	http_response get(const http_request& request);
 	http_response get(const http_request& request, const std::string& path);
@@ -51,6 +52,7 @@ private:
 	{
 		std::vector<uint8_t> data;
 	};
+	CURLSH *share;
 
 private:
 	static size_t curl_get_callback(void* contents, size_t size, size_t nmemb, void* userp);

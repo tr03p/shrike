@@ -27,6 +27,15 @@
 namespace shrike
 {
 
+http_client::impl::impl() {
+	share = curl_share_init();
+
+	// Shared options
+	curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
+	curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+	curl_share_setopt(share, CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
+}
+
 http_response http_client::impl::post(const http_request& request)
 {
 	curl_callback_context context;
@@ -56,6 +65,7 @@ http_response http_client::impl::post(const http_request& request)
 	curl_easy_setopt(ch, CURLOPT_TIMEOUT, 60);
 	curl_easy_setopt(ch, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(ch, CURLOPT_MAXREDIRS, 1);
+	curl_easy_setopt(ch, CURLOPT_SHARE, share);
 
 	// Perform
 	CURLcode result = curl_easy_perform(ch);
