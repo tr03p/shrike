@@ -972,6 +972,13 @@ void json_serializer::deserialize(const std::string& name, std::vector<serializa
 	}
 }
 
+bool json_serializer::contains(const std::string& name)
+{
+	if (_deserializer_stack.top()->isMember(name))
+		return true;
+	return false;
+}
+
 int json_serializer::array_length(const std::string& name)
 {
 	return (*_deserializer_stack.top())[name].size();

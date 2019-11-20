@@ -133,7 +133,7 @@ public:
 	virtual void deserialize(const std::string& name, serializable_object* object) = 0;
 	virtual void deserialize(const std::string& name, std::vector<serializable_object*> object_array) = 0;
 
-
+	virtual bool contains(const std::string& name) = 0;
 	virtual int array_length(const std::string& name) = 0;
 	virtual std::string commit() = 0;
 

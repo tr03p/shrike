@@ -131,6 +131,7 @@ public:
 	void deserialize(const std::string& name, std::vector<serializable_object*> object_array);
 
 
+	bool contains(const std::string& name);
 	int array_length(const std::string& name);
 	std::string commit();
 

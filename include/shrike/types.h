@@ -51,4 +51,9 @@ private:
 
 }
 
+#define COPY_NOT_NULL(dest, src) do { \
+	if (!src.isNull()) \
+		dest = src.value(); \
+ } while (0)
+
 #endif
